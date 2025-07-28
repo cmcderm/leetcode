@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "s2+Pb42MJtk=",
+  "success": true,
+  "projectFilePath": "/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/1195.FizzBuzz_Multithreaded.csproj",
+  "expectedPackageFiles": [
+    "/home/cmcderm/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.7/microsoft.aspnetcore.app.ref.9.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}

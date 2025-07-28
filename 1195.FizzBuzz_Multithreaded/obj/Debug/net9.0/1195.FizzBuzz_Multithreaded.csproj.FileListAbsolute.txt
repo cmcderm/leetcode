@@ -1,0 +1,14 @@
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.GeneratedMSBuildEditorConfig.editorconfig
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.AssemblyInfoInputs.cache
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.AssemblyInfo.cs
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.csproj.CoreCompileInputs.cache
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/bin/Debug/net9.0/1195.FizzBuzz_Multithreaded
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/bin/Debug/net9.0/1195.FizzBuzz_Multithreaded.deps.json
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/bin/Debug/net9.0/1195.FizzBuzz_Multithreaded.runtimeconfig.json
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/bin/Debug/net9.0/1195.FizzBuzz_Multithreaded.dll
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/bin/Debug/net9.0/1195.FizzBuzz_Multithreaded.pdb
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.dll
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/refint/1195.FizzBuzz_Multithreaded.dll
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.pdb
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/1195.FizzBuzz_Multithreaded.genruntimeconfig.cache
+/home/cmcderm/repos/leetcode/1195.FizzBuzz_Multithreaded/obj/Debug/net9.0/ref/1195.FizzBuzz_Multithreaded.dll
