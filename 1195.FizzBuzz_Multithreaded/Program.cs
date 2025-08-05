@@ -1,20 +1,8 @@
-﻿/*
- * It turns out my solution is not acceptable, you need to call each function
- * from the correct thread. However, in order to get things output in the correct order,
- * we're forced to run each thread locked in succession. This is multithreaded, but not parallel.
- * In my solution we fill the data in true multithreaded nature.
- *
- * Wait I could change the sendOutput to run from each thread.
- */
-
+﻿
 public class FizzBuzz {
-    private const int NUM_THREADS = 4;
-
     private int n;
     private int max;
-    bool isMutating = false;
-    Mutex n_mutex = new Mutex();
-    Mutex printMutex = new Mutex();
+    Mutex actionMutex = new Mutex();
 
     // Represents all threads being complete
     private bool done = false;
@@ -25,27 +13,27 @@ public class FizzBuzz {
     }
 
     public bool crit_compare_n_to_max() {
-        while(isMutating) {}
         return this.n <= this.max;
     }
 
-    public void critical_action(Action a) {
-        printMutex.WaitOne();
-        a();
-        this.n++;
+    public void critical_action(Action action) {
+        actionMutex.WaitOne();
+        if (!done) {
+            action();
+            this.n++;
 
-        if (this.n <= this.max) {
-
+            if (this.n > this.max) {
+                done = true;
+            }
         }
-        printMutex.ReleaseMutex();
-
+        actionMutex.ReleaseMutex();
     }
 
     // printFizz() outputs "fizz".
     public void Fizz(Action printFizz) {
         // This is hoping that reading/writing to an int is atomic, for legibility
         while (!this.done && this.crit_compare_n_to_max()) {
-            if (this.n % 3 == 0 && this.n % 5 != 0) {
+            if (!this.done && this.n % 3 == 0 && this.n % 5 != 0) {
                 critical_action(printFizz);
             }
         }
@@ -54,11 +42,8 @@ public class FizzBuzz {
     // printBuzzz() outputs "buzz".
     public void Buzz(Action printBuzz) {
         while (!this.done && this.crit_compare_n_to_max()) {
-            if (this.n % 3 != 0 && this.n % 5 == 0) {
-                printMutex.WaitOne();
-                printBuzz();
-                n++;
-                printMutex.ReleaseMutex();
+            if (!this.done && this.n % 3 != 0 && this.n % 5 == 0) {
+                critical_action(printBuzz);
             }
         }
     }
@@ -66,11 +51,8 @@ public class FizzBuzz {
     // printFizzBuzz() outputs "fizzbuzz".
     public void Fizzbuzz(Action printFizzBuzz) {
         while (!this.done && this.crit_compare_n_to_max()) {
-            if (this.n % 3 == 0 && this.n % 5 == 0) {
-                printMutex.WaitOne();
-                printFizzBuzz();
-                n++;
-                printMutex.ReleaseMutex();
+            if (!this.done && this.n % 3 == 0 && this.n % 5 == 0) {
+                critical_action(printFizzBuzz);
             }
         }
     }
@@ -79,10 +61,8 @@ public class FizzBuzz {
     public void Number(Action<int> printNumber) {
         while (!this.done && this.crit_compare_n_to_max()) {
             if (this.n % 3 != 0 && this.n % 5 != 0) {
-                printMutex.WaitOne();
-                printNumber(this.n);
-                n++;
-                printMutex.ReleaseMutex();
+                int num_cpy = this.n;
+                critical_action(() => printNumber(num_cpy));
             }
         }
     }
@@ -90,10 +70,17 @@ public class FizzBuzz {
 
 namespace Solution {
     public class MainClass {
-        public static void Main() {
-            FizzBuzz fb = new FizzBuzz(15);
+        public static void Main(string[] args) {
+            int target = 15;
 
-            Console.WriteLine("Hello World!");
+            if (args.Count() >= 1) {
+                if (!Int32.TryParse(args[0], out target)) {
+                    Console.WriteLine("Invalid parameter given for target!");
+                    return;
+                }
+            }
+
+            FizzBuzz fb = new FizzBuzz(target);
 
             Thread threadA = new(() => {
                 try {
