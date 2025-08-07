@@ -14,45 +14,27 @@ void matrix_print(int** matrix, int matrixSize, int matrixColSize) {
     }
 }
 
+// I'm imagining a 2d binary sort, first searching vertically, then horizontally
+// Outer then inner, I don't think binary search benefits from locality caching, but it feels logical
+// Best I've got is O(log(n)log(m)) THIS DIDN'T WORK
+// Now best I've got is O(nlog(m)), boring
 bool searchMatrix(int** matrix, const int matrixSize, const int* matrixColSize, const int target){
-    int left = 0;
-    int right = matrixSize - 1;
+    int i = 0;
+    int j = (*matrixColSize) - 1;
 
-    // I'm imagining a 2d binary sort, first searching vertically, then horizontally
-    // Outer then inner, I don't think binary search benefits from locality caching, but it feels logical
-    // Best I've got is O(log(n)log(m))
-    while (left <= right) {
-        int mid_row = (left + right) / 2;
-
-
-        int mid_top = matrix[mid_row][0];
-        int mid_bottom = matrix[mid_row][(*matrixColSize) - 1];
-
-        if (target < mid_top) {
-            right = mid_row - 1;
-        } else if (target > mid_bottom){
-            left = mid_row + 1;
-        } else {
-            int top = 0;
-            int bottom = (*matrixColSize) - 1;
-
-            // This inner search doesn't give us any information regarding which side to split
-            while (top <= bottom) {
-                int mid = (top + bottom) / 2;
-
-                int mid_val = matrix[mid_row][mid];
-
-                if (target < mid_val ) {
-                    bottom = mid - 1;
-                } else if (target > mid_val) {
-                    top = mid + 1;
-                } else {
-                    return true;
-                }
-            }
+    while (i < matrixSize && j >= 0) {
+        printf("%d\n", matrix[i][j]);
+        if (matrix[i][j] == target) {
+            return true;
         }
-    }
 
+        if (matrix[i][j] > target) {
+            j--;
+        } else {
+            i++;
+        }
+
+    }
     return false;
 }
 
