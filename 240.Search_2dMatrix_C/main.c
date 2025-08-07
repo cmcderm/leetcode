@@ -19,22 +19,33 @@ void matrix_print(int** matrix, int matrixSize, int matrixColSize) {
 // Best I've got is O(log(n)log(m)) THIS DIDN'T WORK
 // Now best I've got is O(nlog(m)), boring
 bool searchMatrix(int** matrix, const int matrixSize, const int* matrixColSize, const int target){
-    int i = 0;
-    int j = (*matrixColSize) - 1;
+    for (int i = 0; i < matrixSize; ++i) {
 
-    while (i < matrixSize && j >= 0) {
-        printf("%d\n", matrix[i][j]);
-        if (matrix[i][j] == target) {
-            return true;
+        int i_top = matrix[i][0];
+        int i_bottom = matrix[i][(*matrixColSize) - 1];
+
+        // Skip sub-arrays that couldn't contain our value
+        if (target >= i_top && target <= i_bottom) {
+            int top = 0;
+            int bottom = (*matrixColSize) - 1;
+
+            // This inner search doesn't give us any information regarding which side to split
+            while (top <= bottom) {
+                int mid = (top + bottom) / 2;
+
+                int mid_val = matrix[i][mid];
+
+                if (target < mid_val ) {
+                    bottom = mid - 1;
+                } else if (target > mid_val) {
+                    top = mid + 1;
+                } else {
+                    return true;
+                }
+            }
         }
-
-        if (matrix[i][j] > target) {
-            j--;
-        } else {
-            i++;
-        }
-
     }
+
     return false;
 }
 
